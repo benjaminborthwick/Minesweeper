@@ -73,6 +73,10 @@ function getTime()
     return timer
 end
 
+function resetTimer()
+    timer = 0
+end
+
 function loadHighScores(difficulty)
     love.filesystem.setIdentity('minesweeper')
 

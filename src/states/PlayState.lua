@@ -8,6 +8,8 @@ function PlayState:enter(params)
     self.highScores = params.highScores
     self.difficulty = params.difficulty
     self.lost = false
+
+    resetTimer()
 end
 
 function PlayState:update()
