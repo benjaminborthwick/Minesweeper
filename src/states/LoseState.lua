@@ -10,7 +10,11 @@ function LoseState:enter(params)
     self.difficulty = params.difficulty
 
     for k, tile in pairs(self.tileMap) do
-        tile.revealed = true
+        if tile.bomb and not tile.flag then
+            tile.revealed = true
+        elseif tile.flag and not tile.bomb then
+            tile.falsely_flagged = true
+        end
     end
 end
 

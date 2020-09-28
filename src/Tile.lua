@@ -11,12 +11,15 @@ function Tile:init(x, y)
     self.flag = false
     self.revealed = false
     self.exploded = false
+    self.falsely_flagged = false
 
     self.number = 0
 end
 
 function Tile:render()
-    if self.exploded then
+    if self.falsely_flagged then
+        love.graphics.draw(gSheet, gFrames['tiles'][4], (self.x - 1) * 32, (self.y - 1) * 32)
+    elseif self.exploded then
         love.graphics.draw(gSheet, gFrames['tiles'][2], (self.x - 1) * 32, (self.y - 1) * 32)
     elseif self.revealed then
         if self.bomb then
