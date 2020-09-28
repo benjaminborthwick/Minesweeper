@@ -7,6 +7,7 @@ function WinState:enter(params)
     self.tileMap = params.tileMap
     self.highScores = params.highScores
     self.time = params.time
+    self.difficulty = params.difficulty
 
     self:updateHighScores()
 end
@@ -18,7 +19,8 @@ function WinState:update()
             height = self.height,
             bombs = self.bombs,
             tileMap = MapMaker.generate(self.width, self.height, self.bombs),
-            highScores = self.highScores
+            highScores = self.highScores,
+            difficulty = self.difficulty
         })
     end
 end
@@ -46,7 +48,13 @@ function WinState:updateHighScores()
         scoreStr = scoreStr .. tostring(self.highScores[i]) .. '\n'
     end
 
-    love.filesystem.write('minesweeper.lst', scoreStr)
+    if self.difficulty == 1 then
+        love.filesystem.write('minesweeper-easy.lst', scoreStr)
+    elseif self.difficulty == 2 then
+        love.filesystem.write('minesweeper-normal.lst', scoreStr)
+    else
+        love.filesystem.write('minesweeper-hard.lst', scoreStr)
+    end
 end
 
 function WinState:render() 

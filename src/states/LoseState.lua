@@ -7,6 +7,7 @@ function LoseState:enter(params)
     self.tileMap = params.tileMap
     self.highScores = params.highScores
     self.time = params.time
+    self.difficulty = params.difficulty
 
     for k, tile in pairs(self.tileMap) do
         tile.revealed = true
@@ -20,7 +21,8 @@ function LoseState:update(params)
             height = self.height,
             bombs = self.bombs,
             tileMap = MapMaker.generate(self.width, self.height, self.bombs),
-            highScores = self.highScores
+            highScores = self.highScores,
+            difficulty = self.difficulty
         })
     end
 end

@@ -5,7 +5,6 @@ function StartState:enter(params)
     self.height = 16
     self.bombs = 99
     self.tileMap = MapMaker.generate(self.width, self.height, self.bombs)
-    self.highScores = params.highScores
     self.selected = 3
 end
 
@@ -22,7 +21,8 @@ function StartState:update(dt)
             height = gDifficulty[self.selected].height,
             bombs = gDifficulty[self.selected].bombs,
             tileMap = MapMaker.generate(gDifficulty[self.selected].width, gDifficulty[self.selected].height, gDifficulty[self.selected].bombs),
-            highScores = self.highScores
+            highScores = loadHighScores(self.selected),
+            difficulty = self.selected
         })
     end
 end

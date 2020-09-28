@@ -23,9 +23,7 @@ function love.load()
         ['win'] = function() return WinState() end
     }
 
-    gStateMachine:change('start', {
-        highScores = loadHighScores()
-    })
+    gStateMachine:change('start')
 
     mousePress = {}
 
@@ -75,34 +73,92 @@ function getTime()
     return timer
 end
 
-function loadHighScores()
+function loadHighScores(difficulty)
     love.filesystem.setIdentity('minesweeper')
 
-    -- if the file doesn't exist, initialize it with some default scores
-    if not love.filesystem.exists('minesweeper.lst') then
-        local scores = ''
-        for i = 10, 1, -1 do
-            scores = scores .. tostring(999) .. '\n'
+    if difficulty == 1 then
+        -- if the file doesn't exist, initialize it with some default scores
+        if not love.filesystem.exists('minesweeper-easy.lst') then
+            local scores = ''
+            for i = 10, 1, -1 do
+                scores = scores .. tostring(999) .. '\n'
+            end
+
+            love.filesystem.write('minesweeper-easy.lst', scores)
         end
 
-        love.filesystem.write('minesweeper.lst', scores)
+        local counter = 1
+
+        -- initialize scores table with at least 10 blank entries
+        local scores = {}
+
+        for i = 1, 10 do
+            -- blank table; each will hold a score
+            scores[i] = nil
+        end
+
+        -- iterate over each line in the file, filling in scores
+        for line in love.filesystem.lines('minesweeper-easy.lst') do
+            scores[counter] = tonumber(line)
+            counter = counter + 1
+        end
+
+        return scores
+    elseif difficulty == 2 then
+        -- if the file doesn't exist, initialize it with some default scores
+        if not love.filesystem.exists('minesweeper-normal.lst') then
+            local scores = ''
+            for i = 10, 1, -1 do
+                scores = scores .. tostring(999) .. '\n'
+            end
+
+            love.filesystem.write('minesweeper-normal.lst', scores)
+        end
+
+        local counter = 1
+
+        -- initialize scores table with at least 10 blank entries
+        local scores = {}
+
+        for i = 1, 10 do
+            -- blank table; each will hold a score
+            scores[i] = nil
+        end
+
+        -- iterate over each line in the file, filling in scores
+        for line in love.filesystem.lines('minesweeper-normal.lst') do
+            scores[counter] = tonumber(line)
+            counter = counter + 1
+        end
+
+        return scores
+    else
+        -- if the file doesn't exist, initialize it with some default scores
+        if not love.filesystem.exists('minesweeper-hard.lst') then
+            local scores = ''
+            for i = 10, 1, -1 do
+                scores = scores .. tostring(999) .. '\n'
+            end
+
+            love.filesystem.write('minesweeper-hard.lst', scores)
+        end
+
+        local counter = 1
+
+        -- initialize scores table with at least 10 blank entries
+        local scores = {}
+
+        for i = 1, 10 do
+            -- blank table; each will hold a score
+            scores[i] = nil
+        end
+
+        -- iterate over each line in the file, filling in scores
+        for line in love.filesystem.lines('minesweeper-hard.lst') do
+            scores[counter] = tonumber(line)
+            counter = counter + 1
+        end
+
+        return scores
     end
-
-    local counter = 1
-
-    -- initialize scores table with at least 10 blank entries
-    local scores = {}
-
-    for i = 1, 10 do
-        -- blank table; each will hold a score
-        scores[i] = nil
-    end
-
-    -- iterate over each line in the file, filling in scores
-    for line in love.filesystem.lines('minesweeper.lst') do
-        scores[counter] = tonumber(line)
-        counter = counter + 1
-    end
-
-    return scores
 end
