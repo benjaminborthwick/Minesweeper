@@ -1,10 +1,6 @@
 StartState = Class{__includes = BaseState}
 
-function StartState:enter(params) 
-    self.width = 30
-    self.height = 16
-    self.bombs = 99
-    self.tileMap = MapMaker.generate(self.width, self.height, self.bombs)
+function StartState:enter(params)
     self.selected = 3
 end
 
@@ -28,8 +24,10 @@ function StartState:update(dt)
 end
 
 function StartState:render()
-    for k, tile in pairs(self.tileMap) do
-        tile:render()
+    for y = 1, 16 do
+        for x = 1, 30 do
+            love.graphics.draw(gSheet, gFrames['tiles'][1], (x - 1) * 32, (y - 1) * 32)
+        end
     end
     love.graphics.setFont(gFonts['large'])
     love.graphics.setColor(0, 0, 0)

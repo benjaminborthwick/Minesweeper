@@ -8,6 +8,7 @@ function PlayState:enter(params)
     self.highScores = params.highScores
     self.difficulty = params.difficulty
     self.lost = false
+    self.firstClick = true
 
     resetTimer()
 end
@@ -22,7 +23,14 @@ function PlayState:update()
 
         -- if left click
         if mousePress[3] == 1 and not self.tileMap[mouseTile].flag then
-            self:revealTile(self.tileMap[mouseTile])
+            if self.firstClick then
+                MapMaker.makeSafeSpot(self.tileMap, self.width, self.height, mouseTile)
+                MapMaker.tileBombCount(self.tileMap, self.width, self.height)
+                self:revealTile(self.tileMap[mouseTile])
+                self.firstClick = false
+            else
+                self:revealTile(self.tileMap[mouseTile])
+            end
         end
 
         -- if right click
@@ -80,9 +88,7 @@ function PlayState:revealTile(tile)
     end
 end
 
-function PlayState:exit()
-
-end
+function PlayState:exit() end
 
 function PlayState:render()
     for k, tile in pairs(self.tileMap) do

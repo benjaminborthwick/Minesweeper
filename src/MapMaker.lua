@@ -36,6 +36,10 @@ function MapMaker.generate(width, height, bombs)
         tiles[bombIndex].bomb = true
     end
 
+    return tiles
+end
+
+function MapMaker.tileBombCount(tiles, width, height)
     --counting bombs around each tile
     local bombCount
     for k, tile in pairs(tiles) do
@@ -51,6 +55,33 @@ function MapMaker.generate(width, height, bombs)
             tile.number = bombCount
         end
     end
+end
 
-    return tiles
+
+function MapMaker.makeSafeSpot(tiles, width, height, tilePlace)
+    local bombsToReplace = 0
+    local tileX = tilePlace % width
+    local tileY = math.floor(tilePlace / width) + 1
+    for y = math.max(1, tileY - 1), math.min(tileY + 1, height) do
+        for x = math.max(1, tileX - 1), math.min(tileX + 1, width) do
+            if tiles[(y - 1) * width + x].bomb then
+                tiles[(y - 1) * width + x].bomb = false
+                bombsToReplace = bombsToReplace + 1
+            end
+        end
+    end
+    while bombsToReplace > 0 do
+        bombPlace = math.random(1, width*height)
+        local bombX = bombPlace % width
+        local bombY = math.floor(bombPlace / width) + 1
+        if tiles[bombPlace].bomb -- If the tile is already a bomb
+                or ((bombX >= tileX - 1 and bombX <= tileX + 1) -- the tile is in the x range of the circle of tiles surrounding the start tile
+                and (bombY >= tileY - 1 and bombX <= tileY + 1)) then -- the tile is in the y range "   "    "    "
+            -- do nothing because a bomb shouldn't go in that spot
+        else
+            -- place a bomb here
+            tiles[bombPlace].bomb = true
+            bombsToReplace = bombsToReplace - 1
+        end
+    end
 end
