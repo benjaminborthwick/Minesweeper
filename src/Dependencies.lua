@@ -22,12 +22,34 @@ require 'src/constants'
 require 'src/MapMaker'
 require 'src/Tile'
 
-gFont = love.graphics.newFont('fonts/font.ttf', 72)
+gFonts = {
+    ['large'] = love.graphics.newFont('fonts/font.ttf', 72),
+    ['small'] = love.graphics.newFont('fonts/font.ttf', 36)
+}
+
 gSheet = love.graphics.newImage('graphics/spritesheet.png')
 
 gFrames = {
     ['numbers'] = {},
     ['tiles'] = {}
+}
+
+gDifficulty = {
+    {
+        width = 9,
+        height = 9,
+        bombs = 10
+    },
+    {
+        width = 16,
+        height = 16,
+        bombs = 40
+    },
+    {
+        width = 30,
+        height = 16,
+        bombs = 99
+    }
 }
 
 local sheetCounter = 1

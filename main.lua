@@ -62,6 +62,15 @@ function love.draw()
     push:finish()
 end
 
+function resizeWindow(w, h)
+    VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_HEIGHT, WINDOW_WIDTH =  w, h, w, h
+    push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
+        fullscreen = false,
+        vsync = true,
+        resizable = true
+    })
+end
+
 function getTime()
     return timer
 end

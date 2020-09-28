@@ -46,7 +46,7 @@ function PlayState:update()
                 bombs = self.bombs,
                 tileMap = self.tileMap,
                 highScores = self.highScores,
-                time = getTime()
+                time = math.floor(getTime())
             })
         end
     end
@@ -63,7 +63,7 @@ function PlayState:revealTile(tile)
             bombs = self.bombs,
             tileMap = self.tileMap,
             highScores = self.highScores,
-            time = getTime()
+            time = math.floor(getTime())
         })
     elseif tile.number == 0 then
         for y = math.max(1, tile.y - 1), math.min(tile.y + 1, self.height) do
