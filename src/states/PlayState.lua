@@ -64,6 +64,25 @@ function PlayState:update()
 end
 
 function PlayState:revealTile(tile)
+    if tile.revealed then
+        surroundingFlags = 0
+        for y = math.max(1, tile.y - 1), math.min(tile.y + 1, self.height) do
+            for x = math.max(1, tile.x - 1), math.min(tile.x + 1, self.width) do
+                if self.tileMap[(y-1) * self.width + x].flag then
+                    surroundingFlags = surroundingFlags + 1
+                end
+            end
+        end
+        if surroundingFlags == tile.number then
+            for y = math.max(1, tile.y - 1), math.min(tile.y + 1, self.height) do
+                for x = math.max(1, tile.x - 1), math.min(tile.x + 1, self.width) do
+                    if not self.tileMap[(y - 1) * self.width + x].revealed and not self.tileMap[(y - 1) * self.width + x].flag then
+                        self:revealTile(self.tileMap[(y - 1) * self.width + x])
+                    end
+                end
+            end
+        end
+    end
     tile.revealed = true
     if tile.bomb then
         tile.exploded = true
