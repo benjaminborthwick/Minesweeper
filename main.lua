@@ -82,7 +82,7 @@ function loadHighScores(difficulty)
 
     if difficulty == 1 then
         -- if the file doesn't exist, initialize it with some default scores
-        if not love.filesystem.exists('minesweeper-easy.lst') then
+        if not love.filesystem.getInfo('minesweeper-easy.lst') then
             local scores = ''
             for i = 10, 1, -1 do
                 scores = scores .. tostring(999) .. '\n'
@@ -110,7 +110,7 @@ function loadHighScores(difficulty)
         return scores
     elseif difficulty == 2 then
         -- if the file doesn't exist, initialize it with some default scores
-        if not love.filesystem.exists('minesweeper-normal.lst') then
+        if not love.filesystem.getInfo('minesweeper-normal.lst') then
             local scores = ''
             for i = 10, 1, -1 do
                 scores = scores .. tostring(999) .. '\n'
@@ -138,7 +138,7 @@ function loadHighScores(difficulty)
         return scores
     else
         -- if the file doesn't exist, initialize it with some default scores
-        if not love.filesystem.exists('minesweeper-hard.lst') then
+        if not love.filesystem.getInfo('minesweeper-hard.lst') then
             local scores = ''
             for i = 10, 1, -1 do
                 scores = scores .. tostring(999) .. '\n'
